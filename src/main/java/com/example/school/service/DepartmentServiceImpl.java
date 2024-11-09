@@ -31,8 +31,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public String emptyDepartment() {
 		List<Department> allDepartment=depRepo.findAll();
 		String message=null;
-		if(allDepartment==null) {
-			message="Opps!! Department's empty\n"+"none to display";
+		if(allDepartment.isEmpty()) {
+			message="Opps!! Department's empty. None to display";
 		}
 		return message;
 	}

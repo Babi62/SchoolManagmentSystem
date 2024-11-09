@@ -27,32 +27,32 @@ public class DepartmentController {
 	@PostMapping("/add")
 	public ResponseEntity<CustomResponse<Department>> add(@RequestBody Department dep) {
 		Department newDepartment = null; 
-				
+		String name=dep.getDep_name();
+		
 		try {
-			if(dep.getDep_name()!=null) {
+			if(name==null || name.isEmpty()) {
+				String message="Please fill the Department name first!!";
+				CustomResponse<Department> response = new CustomResponse<>(message, newDepartment);
 				
-				String message= depService.nameFound(dep);
-				if(message!=null) {
-					CustomResponse<Department> response = new CustomResponse<>(message, newDepartment);
-					return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-				}
-				
-				newDepartment = depService.createDepartment(dep);
-				CustomResponse<Department> response = new CustomResponse<>(
-		                "Department Created Successfully",
-		                newDepartment
-		        );
-				
-				return new ResponseEntity<>(response, HttpStatus.CREATED);
+				return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 			}
-			
-			String message="Please fill the Department name first!!";
-			CustomResponse<Department> response = new CustomResponse<>(message, newDepartment);
-			
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+			String message= depService.nameFound(dep);
+			if(message!=null) {
+				CustomResponse<Department> response = new CustomResponse<>(message, newDepartment);
+				return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+			}
+				
+			newDepartment = depService.createDepartment(dep);
+			CustomResponse<Department> response = new CustomResponse<>(
+		               "Department Created Successfully",
+		               newDepartment
+					);
+				
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
 			
 		} catch (Exception e) {
 			System.out.println(e);
+			
 			String message="An error occurred while creating the department";
 			CustomResponse<Department> response = new CustomResponse<>(message, newDepartment);
 			
@@ -75,5 +75,7 @@ public class DepartmentController {
 		CustomResponse<List<Department>> response = new CustomResponse<>(message, foundDepartment);
 		return new ResponseEntity<>(response, HttpStatus.FOUND);
 	}
+	
+	
 	
 }

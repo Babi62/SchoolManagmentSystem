@@ -1,9 +1,14 @@
 package com.example.school.entity;
 
+
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="Student")
 public class Student {
@@ -14,8 +19,8 @@ public class Student {
 	private String last_name;
 	private int age;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "depid")
 	private Department department;
 	
 }

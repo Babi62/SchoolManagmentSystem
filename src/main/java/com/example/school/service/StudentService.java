@@ -1,5 +1,14 @@
 package com.example.school.service;
 
-public interface StudentService {
+import java.util.List;
 
+import com.example.school.entity.Department;
+import com.example.school.entity.Student;
+
+
+public interface StudentService {
+	Student registerStudent(String fName, String lName, int age, Department dep);
+	List<Student> getStudents();
+	Student updateStudent(Long id, String first_name, String last_name);
+	String deleteStudent(Long id);
 }

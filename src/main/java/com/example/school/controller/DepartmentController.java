@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.school.entity.Department;
@@ -74,6 +76,17 @@ public class DepartmentController {
 		foundDepartment=depService.viewDepartment();
 		CustomResponse<List<Department>> response = new CustomResponse<>(message, foundDepartment);
 		return new ResponseEntity<>(response, HttpStatus.FOUND);
+	}
+	
+	@DeleteMapping("/remove/{id}")
+	public ResponseEntity<CustomResponse<Department>> delete(@PathVariable Long id){
+		String message=depService.deleteDepartment(id);
+		if(message!=null) {
+			CustomResponse<Department> response = new CustomResponse<>(message, null);
+			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+		}
+		CustomResponse<Department> response = new CustomResponse<>("Deleted", null);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	

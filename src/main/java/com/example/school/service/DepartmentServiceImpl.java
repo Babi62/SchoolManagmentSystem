@@ -56,8 +56,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public void deleteDepartment(Long id) {
-		// TODO Auto-generated method stub
-		
+	public String deleteDepartment(Long id) {
+		Department dep = depRepo.findById(id).orElse(null);
+		String message=null;
+		if(dep==null) {
+			message= "Department not found";
+			return message;
+		}
+		depRepo.delete(dep);
+		return message;
 	}
 }

@@ -10,5 +10,5 @@ public interface DepartmentService {
 	String emptyDepartment();
 	List<Department> viewDepartment();
 	Department updateDepartment(Long id, String name );
-	void deleteDepartment(Long id);
+	String deleteDepartment(Long id);
 }

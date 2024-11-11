@@ -11,16 +11,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="Department")
+@Table(name = "Department")
 public class Department {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long depid;
-	
-	@Column(name="department_name", nullable=false)
+
+	@Column(name = "department_name", nullable = false)
 	private String dep_name;
-	
+
 	/*
-	 * @OneToMany(mappedBy= "department") private List<Student> student;
+	 * @OneToMany(mappedBy= "department")
+	 * 
+	 * @OnDelete(action = OnDeleteAction.NO_ACTION)
+	 * private List<Student> student;
 	 */
 }

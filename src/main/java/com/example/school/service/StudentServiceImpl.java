@@ -54,15 +54,36 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student updateStudent(Long id, String first_name, String last_name) {
-		// TODO Auto-generated method stub
+	public Student updateStudent(Long id, String fName, String lName, int age, Department dep) {
+		Student stud = studRepo.findById(id).orElse(null);
+		if(stud!=null){
+			stud.setFirst_name(fName);
+			stud.setLast_name(lName);
+			stud.setAge(age);
+			stud.setDepartment(dep);
+
+			StudentEnrollment enroll=new StudentEnrollment();
+			enroll.setStudent(stud); 
+			enroll.setDepartment(stud.getDepartment());
+			enroll.setEnrollmentDate(LocalDate.now());
+		  
+			enrollService.enroll(enroll);
+		
+			return stud;
+
+		}
 		return null;
 	}
 
 	@Override
 	public String deleteStudent(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Student stud = studRepo.findById(id).orElse(null);
+		if(stud!=null){
+			String message="Deleted";
+			studRepo.delete(stud);
+			return message;
+		}
+		return "Studnent with id "+id+ " not found";
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.example.school.entity;
 
-//import java.util.List;
+import java.util.Set;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,10 +21,7 @@ public class Department {
 	@Column(name = "department_name", nullable = false)
 	private String dep_name;
 
-	/*
-	 * @OneToMany(mappedBy= "department")
-	 * 
-	 * @OnDelete(action = OnDeleteAction.NO_ACTION)
-	 * private List<Student> student;
-	 */
+	@OneToMany(mappedBy= "department", fetch = FetchType.LAZY)
+	private Set<Student> student;
+	 
 }

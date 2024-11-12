@@ -2,6 +2,9 @@ package com.example.school.entity;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,9 +26,11 @@ public class StudentEnrollment {
 	private Long id;
 	
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	private Student student;
 	
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	private Department department;
 	
 	private LocalDate enrollmentDate;

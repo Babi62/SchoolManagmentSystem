@@ -1,6 +1,9 @@
 package com.example.school.entity;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +24,7 @@ public class Student {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "depid")
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	private Department department;
 	
 }

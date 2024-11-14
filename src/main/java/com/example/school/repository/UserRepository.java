@@ -3,11 +3,11 @@ package com.example.school.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.school.entity.User;
-import java.util.List;
+import com.example.school.entity.UserEntity;
+import java.util.Optional;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-	List<User> findByUsername(String username);
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+	Optional<UserEntity> findByUsername(String username);
 }

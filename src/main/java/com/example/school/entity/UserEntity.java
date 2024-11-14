@@ -3,6 +3,9 @@ package com.example.school.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "UserTbl")
-public class User {
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -38,6 +41,7 @@ public class User {
 	},inverseJoinColumns={
 		@JoinColumn(name="Role_id", referencedColumnName="roleId")
 	})
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Role> role = new ArrayList<>();
 	
 }

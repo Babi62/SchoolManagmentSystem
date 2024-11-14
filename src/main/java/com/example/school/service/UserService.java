@@ -1,19 +1,20 @@
 package com.example.school.service;
 
 
-//import java.util.List;
+import java.util.List;
 
 import com.example.school.entity.Role;
-import com.example.school.entity.User;
+import com.example.school.entity.UserEntity;
 
 public interface UserService {
-	String UserFound(User user);
-	User add(User user);
+	String UserFound(UserEntity user);
+	UserEntity add(UserEntity user);
 
 	/*
 	 * User assignRole(Long id, List<Role> role); String roleFound(List<Role> role);
 	 */
-	User getUserById(Long id);
-	User SaveRole(User u);
+	List<UserEntity> allUsers();
+	UserEntity getUserById(Long id);
+	UserEntity SaveRole(UserEntity u);
 	Role getRoleById(Long id);
 }

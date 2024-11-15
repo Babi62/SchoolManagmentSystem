@@ -2,6 +2,7 @@ package com.example.school.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.school.customResponse.CustomResponse;
 import com.example.school.entity.Role;
 import com.example.school.entity.UserEntity;
+import com.example.school.security.JwtGenerator;
 import com.example.school.service.UserService;
 
 @RestController
@@ -33,25 +35,30 @@ public class UserController {
 	private UserService uService;
 	
 	private AuthenticationManager authenticationManager;
+	private JwtGenerator jwtGenerator;
 	
-	public UserController(AuthenticationManager authenticationManager) {
+	public UserController(AuthenticationManager authenticationManager,JwtGenerator jwtGenerator) {
 		super();
 		this.authenticationManager = authenticationManager;
+		this.jwtGenerator=jwtGenerator;
 	}
 
  
 	
 	@PostMapping("/auth/login")
-	public ResponseEntity<String> login(@RequestBody UserEntity user){
+	public ResponseEntity<CustomResponse<Optional<UserEntity>>> login(@RequestBody UserEntity user){
 		try {
 			Authentication auth= authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
 							user.getUsername(), user.getPassword()));
 			SecurityContextHolder.getContext().setAuthentication(auth);
-			String response= "User logged in sucessfully";
+			String message= jwtGenerator.tokenGenerator(auth);
+			Optional<UserEntity> verfiedUser=uService.getUserByUsername(user.getUsername());
+			CustomResponse<Optional<UserEntity>> response = new CustomResponse<>(message, verfiedUser);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (UsernameNotFoundException | BadCredentialsException e) {
-				String response= "Username or password incorrect";
+				String message= "Username or password incorrect";
+				CustomResponse<Optional<UserEntity>> response = new CustomResponse<>(message, null);
 				return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 		}
 		

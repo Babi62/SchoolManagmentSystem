@@ -91,4 +91,10 @@ public class UserServiceImpl implements UserService {
 		return allusers;
 	}
 
+	@Override
+	public Optional<UserEntity> getUserByUsername(String userName) {
+		Optional<UserEntity> foundUser= userRepo.findByUsername(userName);
+		return foundUser;
+	}
+
 }
